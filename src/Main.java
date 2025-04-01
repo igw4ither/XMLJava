@@ -14,27 +14,40 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
-        boolean doIt = true;
 
-        System.out.println("Selecciona una opción");
-        System.out.println("(1) Consultas predeterminadas");
-        System.out.println("(2) Consultas personalizadas");
+        boolean selectionMenu = true;
+        boolean booleanDefaultPath = false;
+        String defaultPath = "";
 
         do {
+            System.out.println("Selecciona una opción");
+            System.out.println("(1) Consultas predeterminadas");
+            System.out.println("(2) Consultas personalizadas");
+
+            if (booleanDefaultPath == true) {
+                System.out.println("(3) Ruta archivo XML predeterminada: Activado");
+            } else {
+                System.out.println("(3) Ruta archivo XML predeterminada: Desactivado");
+            }
+
             int selection = sc.nextInt();
 
             switch (selection) {
-
                 case 1:
                     //Ruta absoluta del archivo XML
-                    String PathFile = sc.next();
-
+                    String PathFile;
+                    if (defaultPath.isEmpty()) {
+                        System.out.print("Escribe la ruta del archivo XML: ");
+                        PathFile = sc.next();
+                    } else {
+                        PathFile = defaultPath;
+                    }
                     System.out.println("(1) Mostrar el satélite con nombre Luna");
                     System.out.println("(2) Mostrar todos los satélites");
                     System.out.println("(3) Mostrar todos los planetas");
                     System.out.print("Escoge una opción: ");
+
                     int option = sc.nextInt();
-                    
 
                     System.out.print(ReadXML(PathFile, option));
 
@@ -45,9 +58,24 @@ public class Main {
                     System.out.print(ReadXML(PathFile, xPathExpression));
 
                     break;
-            }
-        } while (true);
+                case 3:
+                    booleanDefaultPath = !(booleanDefaultPath);
 
+                    if (booleanDefaultPath == true) {
+                        System.out.print("Escribe la ruta predeterminada: ");
+                        defaultPath = sc.next();
+                    } else {
+                        defaultPath = "";
+                    }
+                    break;
+                case 0:
+                    System.out.print("Programa finalizado");
+                    selectionMenu = false;
+                    sc.close();
+                default:
+                    System.out.print("Selecciona una opción correcta");
+            }
+        } while (selectionMenu);
     }
 
     private static StringBuilder ReadXML (String pathFile, int option) throws Exception {
@@ -77,7 +105,6 @@ public class Main {
         for (int i=0;i<nodos.getLength();i++){
             XMLFile.append(nodos.item(i).getNodeName()).append(" : ").append(nodos.item(i).getAttributes().getNamedItem("nombre"));
         }
-
         return XMLFile;
     }
     
@@ -91,16 +118,12 @@ public class Main {
         // Preparación de xpath
         XPath xpath = XPathFactory.newInstance().newXPath();
 
-
         // Consultas
         NodeList nodos = (NodeList) xpath.evaluate(xPathExpression, documento, XPathConstants.NODESET);
-
 
         for (int i = 0; i<nodos.getLength(); i++){
            XMLFile.append(nodos.item(i).getNodeName()).append(": ").append(nodos.item(i).getAttributes().getNamedItem("nombre"));
         }
-
         return XMLFile;
     }
-
 }
