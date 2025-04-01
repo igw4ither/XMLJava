@@ -23,13 +23,12 @@ public class Main {
             System.out.println("Selecciona una opción");
             System.out.println("(1) Consultas predeterminadas");
             System.out.println("(2) Consultas personalizadas");
-
             if (booleanDefaultPath == true) {
                 System.out.println("(3) Ruta archivo XML predeterminada: Activado");
             } else {
                 System.out.println("(3) Ruta archivo XML predeterminada: Desactivado");
             }
-            System.out.print("(0) Salir del programa");
+            System.out.println("(0) Salir del programa");
 
             int selection = sc.nextInt();
 
