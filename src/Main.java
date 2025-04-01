@@ -53,7 +53,9 @@ public class Main {
 
                     break;
                 case 2:
+                    System.out.print("Escribe la ruta del archivo XML: ");
                     PathFile = sc.next();
+                    System.out.print("Escribe la expresión para buscar en el archivo XML: ");
                     String xPathExpression = sc.next();
                     System.out.print(ReadXML(PathFile, xPathExpression));
 
