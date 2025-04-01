@@ -29,6 +29,7 @@ public class Main {
             } else {
                 System.out.println("(3) Ruta archivo XML predeterminada: Desactivado");
             }
+            System.out.print("(0) Salir del programa");
 
             int selection = sc.nextInt();
 
